@@ -1,4 +1,4 @@
-name: Development
+name: Development # 깃헙액션 워크플로우 이름이다
 
 # add a evnet trigger to run the workflow an push
 on: [push]

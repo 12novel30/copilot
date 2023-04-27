@@ -45,6 +45,14 @@
             // sudo 명령어를 쓰면 root의 기능을 편하게 할 수 있다.
             "uid": "1000",
             "gid": "1000"
+        },
+
+        "ghcr.io/devcontainers/features/java:1": {
+          "installGradle": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install Gradle, a build automation tool for multi-language software development"
+          },
         }
     },
     
