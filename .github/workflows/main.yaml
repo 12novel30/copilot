@@ -1,0 +1,28 @@
+name: Development
+
+# add a evnet trigger to run the workflow an push
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # add a new stack to install .NET SDK 7
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.x
+      # add a new step to restroe nuget package
+      - name: Restore nuget packages
+        run: dotnet restore
+      # add a new step to build the entire project
+      - name: Build solution
+        run: dotnet build
+      # add a new step to run unit tests
+      - name: Run unit tests
+        run: dotnet test
+      # add a new step to publish src/WebAPU project under the publish folder
+      - name: Publish WebAPI project
+        run: dotnet publish src/WebAPI -c Release -o publish
+      
