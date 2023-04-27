@@ -1,0 +1,87 @@
+{
+    "name": "DevContainer 이름", // 이름 설정
+    
+    "build": {
+      // 컨테이너 기본 이미지 설정
+      // 도커파일 불러오는거다
+      "dockerfile": "./Dockerfile",
+      "context": ".",
+      "args": {
+        "VARIANT": "7.0" // 안쓰면 도커파일에 있는 variant를 그대로 쓸 것.
+      }
+    },
+    
+    "forwardPorts": [
+        3000, 5000, 5001, 8080, 44380
+        // 포트 포워딩
+        // 자주 쓰는 포트를 미리 설정해두면 편하다.
+    ],
+    
+    "features": {
+      // 추가 기능
+        // Azure CLI
+        "ghcr.io/devcontainers/features/azure-cli:latest": {
+            "version": "latest"
+        },
+    
+        // GitHub CLI
+        "ghcr.io/devcontainers/features/github-cli:latest": {
+            "version": "latest"
+        },
+    
+        // node.js
+        "ghcr.io/devcontainers/features/node:latest": {
+            "version": "lts", // lts 의 최신 버전을 설치한다.
+            "nodeGypDependencies": true,
+            "nvmInstallPath": "/usr/local/share/nvm"
+        },
+    
+        // common utilities
+        "ghcr.io/devcontainers/features/common-utils:latest": {
+            "installZsh": true, // true는 설치하겠다는 뜻
+            "installOhMyZsh": true,
+            "upgradePackages": true,
+            "username": "vscode", // root로 하면 모든 권한을 줘버리는거니까 임의의 사용자를 생성
+            // sudo 명령어를 쓰면 root의 기능을 편하게 할 수 있다.
+            "uid": "1000",
+            "gid": "1000"
+        }
+    },
+    
+    "overrideFeatureInstallOrder": [
+      // 추가 기능 설치 순서
+      "ghcr.io/devcontainers/features/common-utils"
+    ],
+    
+    "customizations": {
+      "vscode": {
+        // 코드스페이스 커스터마이징
+        "extensions": [ // VS Code 익스텐션
+            // GitHub 코파일럿 관련
+            "GitHub.copilot",
+            "GitHub.copilot-labs",
+
+            // C# 관련
+            "ms-dotnettools.vscode-dotnet-pack",
+            "kreativ-software.csharpextensions",
+
+            // Azure 관련
+            "ms-vscode.vscode-node-azure-pack",
+            "ms-azuretools.vscode-bicep"
+        ],
+    
+        "settings": {
+            // VS Code 환경 설정
+            "editor.minimap.enabled": false,
+            "explorer.sortOrder": "type",
+            "workbench.colorTheme": "GitHub Dark Default"
+        }
+      }
+    },
+  
+    // post-create.sh 스크립트 실행 명령어
+    "postCreateCommand": "/bin/bash ./.devcontainer/post-create.sh > ~/post-create.log",
+  
+    // DevContainer 사용자 계정
+    "remoteUser": "vscode"
+  }
